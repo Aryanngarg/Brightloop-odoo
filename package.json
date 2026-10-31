@@ -1,9 +1,0 @@
-{
-  "name": "brightloop-odoo",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "echo \"Static site: no build step required\"",
-    "test": "node --check script.js"
-  }
-}
