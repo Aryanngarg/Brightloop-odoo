@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10172a" />
+  <script>try{var t=JSON.parse(localStorage.getItem("bl_theme"));document.documentElement.dataset.theme=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}catch(e){}</script>
+  <title>Brightloop — Subscription Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" id="brandLink" href="#" aria-label="Brightloop home">
+        <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
+        <span>brightloop<span class="brand-dot">.</span></span>
+      </a>
+      <div class="workspace" id="workspaceBtn" role="button" tabindex="0" aria-haspopup="menu">
+        <div class="workspace-icon" id="wsIcon">B</div>
+        <div class="workspace-copy"><strong id="wsName">Brightloop Software</strong><small>Workspace</small></div>
+        <span class="chevrons">⌃<br>⌄</span>
+      </div>
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-page="Overview"><span class="nav-icon">▦</span>Overview</button>
+        <button class="nav-item" data-page="Subscriptions"><span class="nav-icon">↻</span>Subscriptions <span class="nav-count">128</span></button>
+        <button class="nav-item" data-page="Customers"><span class="nav-icon">♙</span>Customers</button>
+        <button class="nav-item" data-page="Products & plans"><span class="nav-icon">◇</span>Products & plans</button>
+        <button class="nav-item" data-page="Invoices"><span class="nav-icon">▤</span>Invoices <span class="nav-dot"></span></button>
+        <button class="nav-item" data-page="Payments"><span class="nav-icon">⇄</span>Payments</button>
+        <button class="nav-item" data-page="Discounts"><span class="nav-icon">％</span>Discounts</button>
+      </nav>
+      <p class="nav-label reports-label">INSIGHTS</p>
+      <nav class="main-nav" aria-label="Insights navigation">
+        <button class="nav-item" data-page="Reports"><span class="nav-icon">▥</span>Reports</button>
+        <button class="nav-item" data-page="Members" data-roles="admin" hidden><span class="nav-icon">☺</span>Members</button>
+        <button class="nav-item" data-page="Developer" data-roles="admin,developer" hidden><span class="nav-icon">&lt;/&gt;</span>Developer</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">✳</div><strong>Need a hand?</strong><p>Our team is here to help you get the most out of Brightloop.</p><button id="helpBtn">Visit help center <span>↗</span></button></div>
+        <button class="nav-item" data-page="Settings"><span class="nav-icon">⚙</span>Settings</button>
+        <div class="profile">
+          <div class="avatar avatar-purple" id="profAvatar">GU</div><div class="profile-copy"><strong id="profName">Guest</strong><small id="profRole">Not logged in</small></div><button class="more-btn" id="profileMore" aria-label="Profile menu">•••</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong id="crumbPage">Overview</strong></div>
+        <div class="topbar-actions">
+          <label class="global-search"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search anything..." /><kbd>⌘ K</kbd></label>
+          <button class="icon-button" id="themeBtn" aria-label="Switch to dark mode" title="Toggle dark mode">☾</button>
+          <button class="icon-button" id="notificationBtn" aria-label="Notifications">♧<i></i></button>
+          <button class="btn btn-primary btn-login" id="loginBtn">Log in</button>
+          <button class="top-avatar" id="userBtn" aria-label="Account menu" hidden>GU</button>
+        </div>
+      </header>
+
+      <section class="page-content">
+        <div class="welcome-row">
+          <div><div class="eyebrow"><span class="live-dot"></span> <span id="todayLabel"></span></div><h1 id="pageTitle">Good morning, Alex <span class="wave">✳</span></h1><p class="page-subtitle" id="pageSubtitle">Here's what's happening with your subscriptions today.</p></div>
+          <div class="header-buttons"><button class="btn btn-light" id="exportBtn"><span>↓</span> Export report</button><button class="btn btn-primary" id="newSubscriptionBtn"><span>＋</span> New subscription</button></div>
+        </div>
+
+        <div class="period-row dash"><div class="period-tabs"><button class="period active" data-period="7 days">7 days</button><button class="period" data-period="30 days">30 days</button><button class="period" data-period="90 days">90 days</button><button class="period" data-period="12 months">12 months</button></div><button class="date-filter" id="dateFilter">▦ <span>Oct 1 – Oct 31, 2026</span>⌄</button></div>
+
+        <section class="stats-grid dash" aria-label="Subscription summary">
+          <article class="stat-card" data-go="Reports" role="link" tabindex="0"><div class="stat-top"><span>Monthly recurring revenue <span class="info">i</span></span><span class="stat-icon mint">↗</span></div><div class="stat-value">₹24,86,500</div><div class="stat-foot"><span class="trend positive">↗ 12.8%</span><span class="vs">vs. last month</span><svg class="sparkline" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 27 L14 22 L25 24 L37 13 L49 18 L61 8 L72 12 L84 4 L98 7"/></svg></div></article>
+          <article class="stat-card" data-go="Subscriptions" role="link" tabindex="0"><div class="stat-top"><span>Active subscriptions <span class="info">i</span></span><span class="stat-icon lavender">↻</span></div><div class="stat-value">1,284</div><div class="stat-foot"><span class="trend positive">↗ 8.2%</span><span class="vs">vs. last month</span><svg class="sparkline purple-line" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 25 L14 27 L25 18 L37 21 L49 12 L61 16 L72 8 L84 11 L98 3"/></svg></div></article>
+          <article class="stat-card" data-go="Payments" role="link" tabindex="0"><div class="stat-top"><span>Payments collected <span class="info">i</span></span><span class="stat-icon blue">₹</span></div><div class="stat-value">₹18,42,250</div><div class="stat-foot"><span class="trend positive">↗ 6.4%</span><span class="vs">vs. last month</span><svg class="sparkline blue-line" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 24 L14 19 L25 23 L37 12 L49 16 L61 7 L72 13 L84 4 L98 8"/></svg></div></article>
+          <article class="stat-card" data-go="Invoices" role="link" tabindex="0"><div class="stat-top"><span>Outstanding invoices <span class="info">i</span></span><span class="stat-icon peach">!</span></div><div class="stat-value">₹3,28,750</div><div class="stat-foot"><span class="trend negative">↘ 3.1%</span><span class="vs">vs. last month</span><svg class="sparkline orange-line" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 5 L14 12 L25 9 L37 18 L49 14 L61 22 L72 18 L84 26 L98 23"/></svg></div></article>
+        </section>
+
+        <section class="middle-grid dash">
+          <article class="panel revenue-panel">
+            <div class="panel-heading"><div><h2>Revenue overview</h2><p>Track your revenue performance over time.</p></div><button class="select-like" id="revenueSelect">Revenue ▾</button></div>
+            <div class="chart-legend"><span><i class="legend-current"></i> This period</span><span><i class="legend-previous"></i> Previous period</span></div>
+            <div class="chart-wrap"><div class="y-axis" id="yAxis"><span>₹30L</span><span>₹20L</span><span>₹10L</span><span>₹0</span></div><div class="chart-main"><div class="grid-lines"><i></i><i></i><i></i><i></i></div><svg class="revenue-chart" viewBox="0 0 620 210" preserveAspectRatio="none" role="img" aria-label="Revenue line chart"><defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6558e8" stop-opacity=".18"/><stop offset="100%" stop-color="#6558e8" stop-opacity="0"/></linearGradient></defs><path class="chart-area" id="cArea" d=""/><path class="chart-prev" id="cPrev" d=""/><path class="chart-current" id="cCurrent" d=""/><circle cx="448" cy="43" r="4.5" class="chart-point" id="cPoint"/></svg><div class="x-axis" id="xAxis"><span>Oct 1</span><span>Oct 5</span><span>Oct 10</span><span>Oct 15</span><span>Oct 20</span><span>Oct 25</span><span>Oct 31</span></div></div></div>
+          </article>
+          <article class="panel plan-panel">
+            <div class="panel-heading"><div><h2>Subscription plans</h2><p>Breakdown by current plan.</p></div><button class="more-btn" aria-label="More plan options">•••</button></div>
+            <div class="donut-wrap"><div class="donut-chart"><div class="donut-center"><strong>1,284</strong><span>Subscriptions</span></div></div><div class="donut-legend"><div data-plan="Business" role="button" tabindex="0" title="Show Business subscriptions"><i class="dot-purple"></i><span>Business</span><strong>42%</strong></div><div data-plan="Professional" role="button" tabindex="0" title="Show Professional subscriptions"><i class="dot-blue"></i><span>Professional</span><strong>31%</strong></div><div data-plan="Starter" role="button" tabindex="0" title="Show Starter subscriptions"><i class="dot-mint"></i><span>Starter</span><strong>18%</strong></div><div data-plan="Enterprise" role="button" tabindex="0" title="Show Enterprise subscriptions"><i class="dot-orange"></i><span>Enterprise</span><strong>9%</strong></div></div></div>
+            <button class="text-link" data-page-link="Products & plans">View all plans <span>→</span></button>
+          </article>
+        </section>
+
+        <section class="panel subscriptions-panel" id="subsPanel">
+          <div class="panel-heading table-heading"><div><h2>Recent subscriptions <span class="count-pill" id="subCount">6</span></h2><p>A quick look at your latest customer activity.</p></div><button class="btn btn-light btn-small" id="viewAllBtn">View all subscriptions <span>→</span></button></div>
+          <div class="table-tools"><label class="table-search"><span>⌕</span><input type="search" id="tableSearch" placeholder="Search customer or subscription..." /></label><div class="tool-right"><select id="statusFilter" aria-label="Filter by status"><option value="All">All statuses</option><option>Active</option><option>Trial</option><option>Past due</option><option>Cancelled</option></select><button class="filter-btn" id="filterBtn">☷ Filters</button></div></div>
+          <div class="bulk-bar" id="bulkBar" hidden><strong id="bulkCount">0 selected</strong><button class="btn btn-light btn-small" data-bulk="export">Export selected</button><button class="btn btn-light btn-small" data-bulk="activate">Mark active</button><button class="btn btn-light btn-small" data-bulk="cancel">Cancel selected</button><button class="link-btn" data-bulk="clear">Clear</button></div>
+          <div class="table-scroll"><table><thead><tr><th><input type="checkbox" id="selectAll" aria-label="Select all subscriptions" /></th><th data-sort="id" tabindex="0" aria-sort="none">SUBSCRIPTION <span>↕</span></th><th data-sort="customer" tabindex="0" aria-sort="none">CUSTOMER <span>↕</span></th><th data-sort="plan" tabindex="0" aria-sort="none">PLAN <span>↕</span></th><th data-sort="amount" tabindex="0" aria-sort="none">AMOUNT <span>↕</span></th><th data-sort="next" tabindex="0" aria-sort="none">NEXT BILLING <span>↕</span></th><th data-sort="status" tabindex="0" aria-sort="none">STATUS <span>↕</span></th><th></th></tr></thead><tbody id="subscriptionRows"></tbody></table></div>
+          <div class="table-footer"><span id="tableSummary">Showing <strong>1–6</strong> of <strong>1,284</strong> subscriptions</span><div class="pagination" id="pagination"></div></div>
+        </section>
+        <section id="pageView" hidden></section>
+        <footer class="page-footer"><span>© 2026 Brightloop Software</span><span><span class="footer-status"></span> All systems operational</span><span>Made for recurring growth <span class="footer-heart">✦</span></span></footer>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><span class="modal-kicker">SUBSCRIPTION SETUP</span><h2 id="modalTitle">Create subscription</h2><p>Set up a new recurring customer subscription.</p></div><button class="close-modal" id="closeModal" data-close aria-label="Close dialog">×</button></div>
+      <form id="subscriptionForm">
+        <div class="form-grid"><label class="form-field full">Customer name<input name="customer" required placeholder="e.g. Aditi Sharma" /></label><label class="form-field full">Email address<input name="email" type="email" required placeholder="name@company.com" /></label><label class="form-field">Plan<select name="plan" required><option value="">Choose a plan</option><option>Starter</option><option>Professional</option><option>Business</option><option>Enterprise</option></select></label><label class="form-field">Billing cycle<select name="cycle"><option>Monthly</option><option>Yearly</option><option>Weekly</option><option>Daily</option></select></label><label class="form-field">Amount (₹)<input name="amount" type="number" min="1" required placeholder="2499" /></label><label class="form-field">Start date<input name="start" type="date" required /></label></div>
+        <div class="modal-note"><span>✦</span><p>Invoices will be generated automatically based on the selected billing cycle.</p></div>
+        <div class="modal-actions"><button type="button" class="btn btn-light" id="cancelModal" data-close>Cancel</button><button type="submit" class="btn btn-primary">Create subscription <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="loginBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <div class="modal-header"><div><span class="modal-kicker" id="authKicker">WELCOME BACK</span><h2 id="authTitle">Log in to Brightloop</h2><p id="authSub">Manage subscriptions, invoices and payments.</p></div><button class="close-modal" data-close aria-label="Close dialog">×</button></div>
+      <form id="loginForm" novalidate>
+        <div class="form-grid">
+          <label class="form-field full" id="nameField" hidden>Full name<input name="name" autocomplete="name" placeholder="e.g. Aditi Sharma" /></label>
+          <label class="form-field full">Email address<input name="email" type="email" autocomplete="email" placeholder="name@company.com" /></label>
+          <label class="form-field full">Password<span class="pw-wrap"><input name="password" type="password" autocomplete="current-password" placeholder="Enter your password" /><button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">Show</button></span></label>
+        </div>
+        <div class="auth-row"><label class="check"><input type="checkbox" name="remember" checked /> Keep me logged in</label><button type="button" class="link-btn" id="forgotBtn">Forgot password?</button></div>
+        <p class="auth-error" id="authError" role="alert" hidden></p>
+        <div class="modal-note"><span>✦</span><p>New accounts start with user access. Ask your workspace admin to grant additional permissions.</p></div>
+        <div class="modal-actions auth-actions"><button type="button" class="link-btn" id="authSwitch">New here? Create an account</button><button type="submit" class="btn btn-primary" id="authSubmit">Log in</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="infoBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+      <div class="modal-header"><div><h2 id="infoTitle"></h2><p id="infoSub"></p></div><button class="close-modal" data-close aria-label="Close dialog">×</button></div>
+      <div id="infoBody"></div>
+      <div class="modal-actions"><button class="btn btn-primary" data-close>Done</button></div>
+    </section>
+  </div>
+  <div class="pop-menu" id="popMenu" role="menu" hidden></div>
+  <div class="toast" id="toast" role="status"><span>✓</span><p id="toastMessage">Done</p></div>
+  <input type="file" id="xlsxInput" accept=".xlsx,.xls,.csv" hidden />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
