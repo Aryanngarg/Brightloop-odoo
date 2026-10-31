@@ -1,5 +1,6 @@
 BRIGHTLOOP - SUBSCRIPTION MANAGEMENT SYSTEM
 
+
 ​ABOUT THE PROJECT
 Brightloop is a web application created to handle customer subscriptions and recurring payments in one place. It helps businesses manage the entire customer journey from signing up to billing, sending invoices, collecting payments, and tracking revenue growth.
 ​THE PROBLEMS IT SOLVES
