@@ -3,143 +3,726 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#10172a" />
-  <script>try{var t=JSON.parse(localStorage.getItem("bl_theme"));document.documentElement.dataset.theme=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}catch(e){}</script>
-  <title>Brightloop — Subscription Management</title>
+  <title>BrightLoop – Subscription Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Google Fonts for crisp modern typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app-layout">
+    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-      <a class="brand" id="brandLink" href="#" aria-label="Brightloop home">
-        <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
-        <span>brightloop<span class="brand-dot">.</span></span>
-      </a>
-      <div class="workspace" id="workspaceBtn" role="button" tabindex="0" aria-haspopup="menu">
-        <div class="workspace-icon" id="wsIcon">B</div>
-        <div class="workspace-copy"><strong id="wsName">Brightloop Software</strong><small>Workspace</small></div>
-        <span class="chevrons">⌃<br>⌄</span>
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">BrightLoop</span>
+            <span class="brand-tag">Subscription OS</span>
+          </div>
+        </div>
+        <button class="icon-btn mobile-close-btn" id="mobileCloseBtn" title="Close menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
-      <p class="nav-label">WORKSPACE</p>
-      <nav class="main-nav" aria-label="Main navigation">
-        <button class="nav-item active" data-page="Overview"><span class="nav-icon">▦</span>Overview</button>
-        <button class="nav-item" data-page="Subscriptions"><span class="nav-icon">↻</span>Subscriptions <span class="nav-count">128</span></button>
-        <button class="nav-item" data-page="Customers"><span class="nav-icon">♙</span>Customers</button>
-        <button class="nav-item" data-page="Products & plans"><span class="nav-icon">◇</span>Products & plans</button>
-        <button class="nav-item" data-page="Invoices"><span class="nav-icon">▤</span>Invoices <span class="nav-dot"></span></button>
-        <button class="nav-item" data-page="Payments"><span class="nav-icon">⇄</span>Payments</button>
-        <button class="nav-item" data-page="Discounts"><span class="nav-icon">％</span>Discounts</button>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-page="customers">
+          <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Customers</span>
+          <span class="badge count-badge" id="navCustomerCount">0</span>
+        </button>
+        <button class="nav-item" data-page="plans">
+          <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span>Products & Plans</span>
+          <span class="badge count-badge" id="navPlanCount">0</span>
+        </button>
+        <button class="nav-item" data-page="subscriptions">
+          <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Subscriptions</span>
+          <span class="badge count-badge" id="navSubCount">0</span>
+        </button>
+        <button class="nav-item" data-page="invoices">
+          <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Invoices</span>
+          <span class="badge count-badge" id="navInvoiceCount">0</span>
+        </button>
+        <button class="nav-item" data-page="payments">
+          <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span>Payments</span>
+        </button>
       </nav>
-      <p class="nav-label reports-label">INSIGHTS</p>
-      <nav class="main-nav" aria-label="Insights navigation">
-        <button class="nav-item" data-page="Reports"><span class="nav-icon">▥</span>Reports</button>
-        <button class="nav-item" data-page="Members" data-roles="admin" hidden><span class="nav-icon">☺</span>Members</button>
-        <button class="nav-item" data-page="Developer" data-roles="admin,developer" hidden><span class="nav-icon">&lt;/&gt;</span>Developer</button>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="help-card"><div class="help-icon">✳</div><strong>Need a hand?</strong><p>Our team is here to help you get the most out of Brightloop.</p><button id="helpBtn">Visit help center <span>↗</span></button></div>
-        <button class="nav-item" data-page="Settings"><span class="nav-icon">⚙</span>Settings</button>
-        <div class="profile">
-          <div class="avatar avatar-purple" id="profAvatar">GU</div><div class="profile-copy"><strong id="profName">Guest</strong><small id="profRole">Not logged in</small></div><button class="more-btn" id="profileMore" aria-label="Profile menu">•••</button>
+
+      <div class="sidebar-footer">
+        <div class="demo-card">
+          <div class="demo-card-title">Demo Data Controls</div>
+          <p class="demo-card-text">Saved in browser LocalStorage.</p>
+          <div class="demo-card-actions">
+            <button class="btn btn-sm btn-outline-white" id="resetDemoBtn">Reset Demo Data</button>
+          </div>
         </div>
       </div>
     </aside>
 
-    <main class="main-area">
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-wrapper">
+      <!-- HEADER -->
       <header class="topbar">
-        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
-        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong id="crumbPage">Overview</strong></div>
-        <div class="topbar-actions">
-          <label class="global-search"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search anything..." /><kbd>⌘ K</kbd></label>
-          <button class="icon-button" id="themeBtn" aria-label="Switch to dark mode" title="Toggle dark mode">☾</button>
-          <button class="icon-button" id="notificationBtn" aria-label="Notifications">♧<i></i></button>
-          <button class="btn btn-primary btn-login" id="loginBtn">Log in</button>
-          <button class="top-avatar" id="userBtn" aria-label="Account menu" hidden>GU</button>
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" title="Toggle Navigation">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div>
+            <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            <p class="page-subtitle" id="pageSubtitle">Real-time overview of your subscription business</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="quick-actions">
+            <button class="btn btn-primary btn-sm" id="globalActionBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span id="globalActionLabel">New Customer</span>
+            </button>
+          </div>
+          <div class="user-pill">
+            <div class="user-avatar">BL</div>
+            <div class="user-info">
+              <span class="user-name">BrightLoop Admin</span>
+              <span class="user-role">Demo Account</span>
+            </div>
+          </div>
         </div>
       </header>
 
-      <section class="page-content">
-        <div class="welcome-row">
-          <div><div class="eyebrow"><span class="live-dot"></span> <span id="todayLabel"></span></div><h1 id="pageTitle">Good morning, Alex <span class="wave">✳</span></h1><p class="page-subtitle" id="pageSubtitle">Here's what's happening with your subscriptions today.</p></div>
-          <div class="header-buttons"><button class="btn btn-light" id="exportBtn"><span>↓</span> Export report</button><button class="btn btn-primary" id="newSubscriptionBtn"><span>＋</span> New subscription</button></div>
+      <!-- VIEW CONTAINER -->
+      <main class="content-body">
+        
+        <!-- ==============================================
+             PAGE 1: DASHBOARD
+             ============================================== -->
+        <section class="page-view active" id="view-dashboard">
+          <!-- KPI Metric Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper blue">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Total Customers</span>
+                <span class="stat-value" id="kpiTotalCustomers">0</span>
+                <span class="stat-subtext text-success">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                  Client base
+                </span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper green">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Active Subscriptions</span>
+                <span class="stat-value" id="kpiActiveSubs">0</span>
+                <span class="stat-subtext text-info">
+                  <span id="kpiTotalSubsCount">0</span> total subs created
+                </span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper indigo">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Total Revenue</span>
+                <span class="stat-value" id="kpiTotalRevenue">$0.00</span>
+                <span class="stat-subtext text-success">
+                  Collected payments
+                </span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper amber">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Pending Payments</span>
+                <span class="stat-value text-amber" id="kpiPendingPayments">$0.00</span>
+                <span class="stat-subtext text-warning">
+                  <span id="kpiUnpaidInvoicesCount">0</span> unpaid / partial invoices
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Shortcuts -->
+          <div class="dashboard-banner">
+            <div class="banner-text">
+              <h3>Fast Actions</h3>
+              <p>Quickly add data and manage your subscription pipeline in one click.</p>
+            </div>
+            <div class="banner-buttons">
+              <button class="btn btn-light" onclick="openModal('customerModal')">+ Add Customer</button>
+              <button class="btn btn-light" onclick="openModal('planModal')">+ Add Plan</button>
+              <button class="btn btn-light" onclick="openModal('subModal')">+ New Subscription</button>
+              <button class="btn btn-light" onclick="openModal('invoiceModal')">+ Generate Invoice</button>
+              <button class="btn btn-white-accent" onclick="openModal('paymentModal')">+ Record Payment</button>
+            </div>
+          </div>
+
+          <!-- Dashboard Two-Column Grid -->
+          <div class="dashboard-grid">
+            <!-- Recent Subscriptions -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Recent Subscriptions</h3>
+                  <p class="card-subtitle">Latest active and confirmed plans</p>
+                </div>
+                <button class="btn btn-link" onclick="navigateTo('subscriptions')">View All &rarr;</button>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Plan</th>
+                      <th>Billing</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardRecentSubsTable">
+                    <!-- Dynamic -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Recent Invoices & Payment Due -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Recent Invoices</h3>
+                  <p class="card-subtitle">Payment collection status</p>
+                </div>
+                <button class="btn btn-link" onclick="navigateTo('invoices')">View All &rarr;</button>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Invoice</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardRecentInvoicesTable">
+                    <!-- Dynamic -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE 2: CUSTOMERS
+             ============================================== -->
+        <section class="page-view" id="view-customers">
+          <div class="card">
+            <div class="card-header flex-between">
+              <div>
+                <h3 class="card-title">Customer Directory</h3>
+                <p class="card-subtitle">Manage customer profiles and contacts</p>
+              </div>
+              <div class="header-actions">
+                <div class="search-input-wrap">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="customerSearchInput" placeholder="Search customers..." />
+                </div>
+                <button class="btn btn-primary" onclick="openModal('customerModal')">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Add Customer
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Email Address</th>
+                    <th>Phone</th>
+                    <th>Company</th>
+                    <th>Active Subs</th>
+                    <th>Added On</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="customersTableBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE 3: PRODUCTS & PLANS
+             ============================================== -->
+        <section class="page-view" id="view-plans">
+          <div class="card-header-standalone flex-between">
+            <div>
+              <h2 class="section-title">Subscription Plans</h2>
+              <p class="section-subtitle">Configure pricing tiers, billing cycles, and feature lists</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('planModal')">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add New Plan
+            </button>
+          </div>
+
+          <!-- Pricing Cards Grid -->
+          <div class="plans-grid" id="plansGridContainer">
+            <!-- Dynamic cards -->
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE 4: SUBSCRIPTIONS
+             ============================================== -->
+        <section class="page-view" id="view-subscriptions">
+          <div class="card">
+            <div class="card-header flex-between">
+              <div>
+                <h3 class="card-title">All Subscriptions</h3>
+                <p class="card-subtitle">Track status: Draft, Confirmed, Active, or Closed</p>
+              </div>
+              <div class="header-actions">
+                <div class="filter-group">
+                  <select id="subStatusFilter" class="form-select form-select-sm">
+                    <option value="ALL">All Statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" onclick="openModal('subModal')">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Create Subscription
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Subscription ID</th>
+                    <th>Customer</th>
+                    <th>Plan</th>
+                    <th>Cycle</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>Next Billing</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="subscriptionsTableBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE 5: INVOICES
+             ============================================== -->
+        <section class="page-view" id="view-invoices">
+          <div class="card">
+            <div class="card-header flex-between">
+              <div>
+                <h3 class="card-title">Invoices</h3>
+                <p class="card-subtitle">Manage customer bills, paid and unpaid balances</p>
+              </div>
+              <div class="header-actions">
+                <div class="filter-group">
+                  <select id="invoiceStatusFilter" class="form-select form-select-sm">
+                    <option value="ALL">All Invoices</option>
+                    <option value="Unpaid">Unpaid</option>
+                    <option value="Partially Paid">Partially Paid</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Overdue">Overdue</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" onclick="openModal('invoiceModal')">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Generate Invoice
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Customer</th>
+                    <th>Issue Date</th>
+                    <th>Due Date</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="invoicesTableBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE 6: PAYMENTS
+             ============================================== -->
+        <section class="page-view" id="view-payments">
+          <div class="card">
+            <div class="card-header flex-between">
+              <div>
+                <h3 class="card-title">Payment History</h3>
+                <p class="card-subtitle">Recorded full and partial customer transactions</p>
+              </div>
+              <div class="header-actions">
+                <button class="btn btn-primary" onclick="openModal('paymentModal')">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Record Payment
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Receipt #</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Invoice #</th>
+                    <th>Payment Method</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="paymentsTableBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+
+  <!-- ====================================================
+       MODALS
+       ==================================================== -->
+
+  <!-- 1. CUSTOMER MODAL -->
+  <div class="modal-backdrop" id="customerModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="customerModalTitle">Add New Customer</h3>
+        <button class="modal-close" onclick="closeModal('customerModal')">&times;</button>
+      </div>
+      <form id="customerForm">
+        <div class="modal-body">
+          <input type="hidden" id="customerIdField" />
+          <div class="form-group">
+            <label class="form-label" for="custName">Full Name <span class="required">*</span></label>
+            <input type="text" id="custName" class="form-control" placeholder="e.g. Sarah Jenkins" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="custEmail">Email Address <span class="required">*</span></label>
+            <input type="email" id="custEmail" class="form-control" placeholder="sarah@example.com" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="custPhone">Phone Number</label>
+              <input type="tel" id="custPhone" class="form-control" placeholder="+1 (555) 019-2834" />
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="custCompany">Company Name</label>
+              <input type="text" id="custCompany" class="form-control" placeholder="Apex Innovations" />
+            </div>
+          </div>
         </div>
-
-        <div class="period-row dash"><div class="period-tabs"><button class="period active" data-period="7 days">7 days</button><button class="period" data-period="30 days">30 days</button><button class="period" data-period="90 days">90 days</button><button class="period" data-period="12 months">12 months</button></div><button class="date-filter" id="dateFilter">▦ <span>Oct 1 – Oct 31, 2026</span>⌄</button></div>
-
-        <section class="stats-grid dash" aria-label="Subscription summary">
-          <article class="stat-card" data-go="Reports" role="link" tabindex="0"><div class="stat-top"><span>Monthly recurring revenue <span class="info">i</span></span><span class="stat-icon mint">↗</span></div><div class="stat-value">₹24,86,500</div><div class="stat-foot"><span class="trend positive">↗ 12.8%</span><span class="vs">vs. last month</span><svg class="sparkline" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 27 L14 22 L25 24 L37 13 L49 18 L61 8 L72 12 L84 4 L98 7"/></svg></div></article>
-          <article class="stat-card" data-go="Subscriptions" role="link" tabindex="0"><div class="stat-top"><span>Active subscriptions <span class="info">i</span></span><span class="stat-icon lavender">↻</span></div><div class="stat-value">1,284</div><div class="stat-foot"><span class="trend positive">↗ 8.2%</span><span class="vs">vs. last month</span><svg class="sparkline purple-line" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 25 L14 27 L25 18 L37 21 L49 12 L61 16 L72 8 L84 11 L98 3"/></svg></div></article>
-          <article class="stat-card" data-go="Payments" role="link" tabindex="0"><div class="stat-top"><span>Payments collected <span class="info">i</span></span><span class="stat-icon blue">₹</span></div><div class="stat-value">₹18,42,250</div><div class="stat-foot"><span class="trend positive">↗ 6.4%</span><span class="vs">vs. last month</span><svg class="sparkline blue-line" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 24 L14 19 L25 23 L37 12 L49 16 L61 7 L72 13 L84 4 L98 8"/></svg></div></article>
-          <article class="stat-card" data-go="Invoices" role="link" tabindex="0"><div class="stat-top"><span>Outstanding invoices <span class="info">i</span></span><span class="stat-icon peach">!</span></div><div class="stat-value">₹3,28,750</div><div class="stat-foot"><span class="trend negative">↘ 3.1%</span><span class="vs">vs. last month</span><svg class="sparkline orange-line" viewBox="0 0 100 32" aria-hidden="true"><path d="M2 5 L14 12 L25 9 L37 18 L49 14 L61 22 L72 18 L84 26 L98 23"/></svg></div></article>
-        </section>
-
-        <section class="middle-grid dash">
-          <article class="panel revenue-panel">
-            <div class="panel-heading"><div><h2>Revenue overview</h2><p>Track your revenue performance over time.</p></div><button class="select-like" id="revenueSelect">Revenue ▾</button></div>
-            <div class="chart-legend"><span><i class="legend-current"></i> This period</span><span><i class="legend-previous"></i> Previous period</span></div>
-            <div class="chart-wrap"><div class="y-axis" id="yAxis"><span>₹30L</span><span>₹20L</span><span>₹10L</span><span>₹0</span></div><div class="chart-main"><div class="grid-lines"><i></i><i></i><i></i><i></i></div><svg class="revenue-chart" viewBox="0 0 620 210" preserveAspectRatio="none" role="img" aria-label="Revenue line chart"><defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6558e8" stop-opacity=".18"/><stop offset="100%" stop-color="#6558e8" stop-opacity="0"/></linearGradient></defs><path class="chart-area" id="cArea" d=""/><path class="chart-prev" id="cPrev" d=""/><path class="chart-current" id="cCurrent" d=""/><circle cx="448" cy="43" r="4.5" class="chart-point" id="cPoint"/></svg><div class="x-axis" id="xAxis"><span>Oct 1</span><span>Oct 5</span><span>Oct 10</span><span>Oct 15</span><span>Oct 20</span><span>Oct 25</span><span>Oct 31</span></div></div></div>
-          </article>
-          <article class="panel plan-panel">
-            <div class="panel-heading"><div><h2>Subscription plans</h2><p>Breakdown by current plan.</p></div><button class="more-btn" aria-label="More plan options">•••</button></div>
-            <div class="donut-wrap"><div class="donut-chart"><div class="donut-center"><strong>1,284</strong><span>Subscriptions</span></div></div><div class="donut-legend"><div data-plan="Business" role="button" tabindex="0" title="Show Business subscriptions"><i class="dot-purple"></i><span>Business</span><strong>42%</strong></div><div data-plan="Professional" role="button" tabindex="0" title="Show Professional subscriptions"><i class="dot-blue"></i><span>Professional</span><strong>31%</strong></div><div data-plan="Starter" role="button" tabindex="0" title="Show Starter subscriptions"><i class="dot-mint"></i><span>Starter</span><strong>18%</strong></div><div data-plan="Enterprise" role="button" tabindex="0" title="Show Enterprise subscriptions"><i class="dot-orange"></i><span>Enterprise</span><strong>9%</strong></div></div></div>
-            <button class="text-link" data-page-link="Products & plans">View all plans <span>→</span></button>
-          </article>
-        </section>
-
-        <section class="panel subscriptions-panel" id="subsPanel">
-          <div class="panel-heading table-heading"><div><h2>Recent subscriptions <span class="count-pill" id="subCount">6</span></h2><p>A quick look at your latest customer activity.</p></div><button class="btn btn-light btn-small" id="viewAllBtn">View all subscriptions <span>→</span></button></div>
-          <div class="table-tools"><label class="table-search"><span>⌕</span><input type="search" id="tableSearch" placeholder="Search customer or subscription..." /></label><div class="tool-right"><select id="statusFilter" aria-label="Filter by status"><option value="All">All statuses</option><option>Active</option><option>Trial</option><option>Past due</option><option>Cancelled</option></select><button class="filter-btn" id="filterBtn">☷ Filters</button></div></div>
-          <div class="bulk-bar" id="bulkBar" hidden><strong id="bulkCount">0 selected</strong><button class="btn btn-light btn-small" data-bulk="export">Export selected</button><button class="btn btn-light btn-small" data-bulk="activate">Mark active</button><button class="btn btn-light btn-small" data-bulk="cancel">Cancel selected</button><button class="link-btn" data-bulk="clear">Clear</button></div>
-          <div class="table-scroll"><table><thead><tr><th><input type="checkbox" id="selectAll" aria-label="Select all subscriptions" /></th><th data-sort="id" tabindex="0" aria-sort="none">SUBSCRIPTION <span>↕</span></th><th data-sort="customer" tabindex="0" aria-sort="none">CUSTOMER <span>↕</span></th><th data-sort="plan" tabindex="0" aria-sort="none">PLAN <span>↕</span></th><th data-sort="amount" tabindex="0" aria-sort="none">AMOUNT <span>↕</span></th><th data-sort="next" tabindex="0" aria-sort="none">NEXT BILLING <span>↕</span></th><th data-sort="status" tabindex="0" aria-sort="none">STATUS <span>↕</span></th><th></th></tr></thead><tbody id="subscriptionRows"></tbody></table></div>
-          <div class="table-footer"><span id="tableSummary">Showing <strong>1–6</strong> of <strong>1,284</strong> subscriptions</span><div class="pagination" id="pagination"></div></div>
-        </section>
-        <section id="pageView" hidden></section>
-        <footer class="page-footer"><span>© 2026 Brightloop Software</span><span><span class="footer-status"></span> All systems operational</span><span>Made for recurring growth <span class="footer-heart">✦</span></span></footer>
-      </section>
-    </main>
-  </div>
-
-  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-header"><div><span class="modal-kicker">SUBSCRIPTION SETUP</span><h2 id="modalTitle">Create subscription</h2><p>Set up a new recurring customer subscription.</p></div><button class="close-modal" id="closeModal" data-close aria-label="Close dialog">×</button></div>
-      <form id="subscriptionForm">
-        <div class="form-grid"><label class="form-field full">Customer name<input name="customer" required placeholder="e.g. Aditi Sharma" /></label><label class="form-field full">Email address<input name="email" type="email" required placeholder="name@company.com" /></label><label class="form-field">Plan<select name="plan" required><option value="">Choose a plan</option><option>Starter</option><option>Professional</option><option>Business</option><option>Enterprise</option></select></label><label class="form-field">Billing cycle<select name="cycle"><option>Monthly</option><option>Yearly</option><option>Weekly</option><option>Daily</option></select></label><label class="form-field">Amount (₹)<input name="amount" type="number" min="1" required placeholder="2499" /></label><label class="form-field">Start date<input name="start" type="date" required /></label></div>
-        <div class="modal-note"><span>✦</span><p>Invoices will be generated automatically based on the selected billing cycle.</p></div>
-        <div class="modal-actions"><button type="button" class="btn btn-light" id="cancelModal" data-close>Cancel</button><button type="submit" class="btn btn-primary">Create subscription <span>→</span></button></div>
-      </form>
-    </section>
-  </div>
-  <div class="modal-backdrop" id="loginBackdrop" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-      <div class="modal-header"><div><span class="modal-kicker" id="authKicker">WELCOME BACK</span><h2 id="authTitle">Log in to Brightloop</h2><p id="authSub">Manage subscriptions, invoices and payments.</p></div><button class="close-modal" data-close aria-label="Close dialog">×</button></div>
-      <form id="loginForm" novalidate>
-        <div class="form-grid">
-          <label class="form-field full" id="nameField" hidden>Full name<input name="name" autocomplete="name" placeholder="e.g. Aditi Sharma" /></label>
-          <label class="form-field full" id="roleField" hidden>Account type<select name="role"><option value="user">User</option><option value="developer">Developer</option></select></label>
-          <label class="form-field full">Email address<input name="email" type="email" autocomplete="email" placeholder="name@company.com" /></label>
-          <label class="form-field full">Password<span class="pw-wrap"><input name="password" type="password" autocomplete="current-password" placeholder="Enter your password" /><button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">Show</button></span></label>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('customerModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Customer</button>
         </div>
-        <div class="auth-row"><label class="check"><input type="checkbox" name="remember" checked /> Keep me logged in</label><button type="button" class="link-btn" id="forgotBtn">Forgot password?</button></div>
-        <p class="auth-error" id="authError" role="alert" hidden></p>
-        <div class="modal-note"><span>✦</span><p>Try a demo role (password <strong>Brightloop@123</strong>): <button type="button" class="link-btn" data-demo="0">Admin</button> · <button type="button" class="link-btn" data-demo="1">Developer</button> · <button type="button" class="link-btn" data-demo="2">User</button></p></div>
-        <div class="modal-actions auth-actions"><button type="button" class="link-btn" id="authSwitch">New here? Create an account</button><button type="submit" class="btn btn-primary" id="authSubmit">Log in</button></div>
       </form>
-    </section>
+    </div>
   </div>
-  <div class="modal-backdrop" id="infoBackdrop" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
-      <div class="modal-header"><div><h2 id="infoTitle"></h2><p id="infoSub"></p></div><button class="close-modal" data-close aria-label="Close dialog">×</button></div>
-      <div id="infoBody"></div>
-      <div class="modal-actions"><button class="btn btn-primary" data-close>Done</button></div>
-    </section>
+
+  <!-- 2. PLAN MODAL -->
+  <div class="modal-backdrop" id="planModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Subscription Plan</h3>
+        <button class="modal-close" onclick="closeModal('planModal')">&times;</button>
+      </div>
+      <form id="planForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="planName">Plan Name <span class="required">*</span></label>
+            <input type="text" id="planName" class="form-control" placeholder="e.g. Growth Pro" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="planCycle">Billing Cycle <span class="required">*</span></label>
+              <select id="planCycle" class="form-control" required>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="planPrice">Price ($ USD) <span class="required">*</span></label>
+              <input type="number" id="planPrice" class="form-control" placeholder="49.00" min="0" step="0.01" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="planDesc">Short Description</label>
+            <input type="text" id="planDesc" class="form-control" placeholder="Ideal for fast-scaling product teams" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="planFeatures">Features (one per line or comma-separated)</label>
+            <textarea id="planFeatures" class="form-control" rows="3" placeholder="Unlimited Projects&#10;Priority Email Support&#10;Custom Domain&#10;Analytics Dashboard"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('planModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Plan</button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="pop-menu" id="popMenu" role="menu" hidden></div>
-  <div class="toast" id="toast" role="status"><span>✓</span><p id="toastMessage">Done</p></div>
-  <input type="file" id="xlsxInput" accept=".xlsx,.xls,.csv" hidden />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="script.js"></script>
+
+  <!-- 3. SUBSCRIPTION MODAL -->
+  <div class="modal-backdrop" id="subModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="subModalTitle">Create Subscription</h3>
+        <button class="modal-close" onclick="closeModal('subModal')">&times;</button>
+      </div>
+      <form id="subForm">
+        <div class="modal-body">
+          <input type="hidden" id="subIdField" />
+          <div class="form-group">
+            <label class="form-label" for="subCustomerSelect">Select Customer <span class="required">*</span></label>
+            <select id="subCustomerSelect" class="form-control" required>
+              <!-- Filled dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="subPlanSelect">Select Plan <span class="required">*</span></label>
+            <select id="subPlanSelect" class="form-control" required>
+              <!-- Filled dynamically -->
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="subStatusSelect">Status <span class="required">*</span></label>
+              <select id="subStatusSelect" class="form-control" required>
+                <option value="Active">Active</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Draft">Draft</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="subStartDate">Start Date <span class="required">*</span></label>
+              <input type="date" id="subStartDate" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="subAutoInvoice" checked />
+              <span>Automatically generate initial invoice for this subscription</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('subModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Subscription</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. INVOICE GENERATOR MODAL -->
+  <div class="modal-backdrop" id="invoiceModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Generate New Invoice</h3>
+        <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+      </div>
+      <form id="invoiceForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="invCustomerSelect">Select Customer <span class="required">*</span></label>
+            <select id="invCustomerSelect" class="form-control" required>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="invSubSelect">Linked Subscription (Optional)</label>
+            <select id="invSubSelect" class="form-control">
+              <option value="">-- No specific subscription --</option>
+              <!-- Populated dynamically based on customer -->
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="invAmount">Invoice Amount ($ USD) <span class="required">*</span></label>
+              <input type="number" id="invAmount" class="form-control" placeholder="79.00" min="0.01" step="0.01" required />
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="invDueDate">Payment Due Date <span class="required">*</span></label>
+              <input type="date" id="invDueDate" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="invNotes">Notes / Description</label>
+            <input type="text" id="invNotes" class="form-control" placeholder="Monthly SaaS subscription service" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('invoiceModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Generate Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. RECORD PAYMENT MODAL -->
+  <div class="modal-backdrop" id="paymentModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Payment</h3>
+        <button class="modal-close" onclick="closeModal('paymentModal')">&times;</button>
+      </div>
+      <form id="paymentForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="payInvoiceSelect">Select Invoice to Pay <span class="required">*</span></label>
+            <select id="payInvoiceSelect" class="form-control" required>
+              <!-- Filled with pending/unpaid invoices -->
+            </select>
+          </div>
+
+          <div class="invoice-summary-banner" id="payInvoiceInfoBanner" style="display:none;">
+            <div class="summary-line">
+              <span>Customer:</span>
+              <strong id="payBannerCustomer">-</strong>
+            </div>
+            <div class="summary-line">
+              <span>Total Invoice Amount:</span>
+              <strong id="payBannerTotal">$0.00</strong>
+            </div>
+            <div class="summary-line">
+              <span>Remaining Balance:</span>
+              <strong class="text-amber" id="payBannerBalance">$0.00</strong>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="payAmount">Payment Amount ($) <span class="required">*</span></label>
+              <div class="input-with-button">
+                <input type="number" id="payAmount" class="form-control" placeholder="0.00" min="0.01" step="0.01" required />
+                <button type="button" class="btn btn-xs btn-outline" id="payFullBtn">Full</button>
+              </div>
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="payMethod">Payment Method <span class="required">*</span></label>
+              <select id="payMethod" class="form-control" required>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Bank Transfer">Bank Transfer (ACH)</option>
+                <option value="Stripe">Stripe</option>
+                <option value="PayPal">PayPal</option>
+                <option value="Cash / Check">Cash / Check</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="payDate">Payment Date <span class="required">*</span></label>
+              <input type="date" id="payDate" class="form-control" required />
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="payNotes">Reference / Notes</label>
+              <input type="text" id="payNotes" class="form-control" placeholder="e.g. TXN-94821" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('paymentModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. INVOICE VIEW / PRINT MODAL -->
+  <div class="modal-backdrop" id="viewInvoiceModal">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Invoice Details</h3>
+        <button class="modal-close" onclick="closeModal('viewInvoiceModal')">&times;</button>
+      </div>
+      <div class="modal-body printable-area" id="invoicePrintableArea">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('viewInvoiceModal')">Close</button>
+        <button type="button" class="btn btn-outline" id="printInvoiceBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print / Save PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>
